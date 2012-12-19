@@ -17,6 +17,8 @@ if __name__ == '__main__':
 
 path = 'D:\\ComputerEngineer\\Meshhkat\\Ahkam2\\'
 dir = os.listdir(path)
+file3 = open(path + 'categories.xml','w')
+file3.write('<xml>\n')
 for filename in dir:
     print filename
     if filename.__contains__('.htm'):
@@ -26,10 +28,14 @@ for filename in dir:
         file2.write('<xml>')
         for action, elem in context:
             if (elem.tag == 'h3') & ('align' in elem.attrib.keys()):
-                cat = elem.text
+            	cat = elem.text
                 subcat = elem.text
+                file3.write('<cat>'+cat.encode('utf-8'))
+                file3.write('</cat>\n')
+                
             elif elem.tag == 'h3':
                 subcat = elem.text
+                file3.write('\t<subcat cat=\"'+cat+'\">' + subcat.encode('utf-8') +'</subcat>\n')
             elif(elem.tag == 'p'):
                 if (elem.attrib['style'] == 'font-weight: 600;font-size:11px;color:#303030'):
                     tag = 'question'                
@@ -49,21 +55,11 @@ for filename in dir:
         file.close()
         file2.write('</xml>')
         file2.close()
-
-                
-                
-
-        """
-        tree.xpath('')
-        for elem in tree.xpath('//h3[@align="center"]'):
-            file2.write(s)
-        file.close()
-        file2.close()"""
+file3.write('</xml>')
+file3.close()
 print 'Finished!'
 
 
 
 
  
-
-
